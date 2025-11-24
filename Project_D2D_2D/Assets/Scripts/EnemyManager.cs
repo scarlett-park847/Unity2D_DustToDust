@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
+    [SerializeField] GameObject chargerPrefab;
+
     [SerializeField] float timeBetweenSpawns = 0.5f;
     float currentTimeBetweenSpawns;
 
@@ -43,8 +45,12 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
+        var roll = Random.Range(0, 100);
+        var enemyType = roll < 90 ? enemyPrefab : chargerPrefab;
+
+
         //below code create enemy in a random position and quaternion.identity makes it ignore rotaion 
-        var e = Instantiate(enemyPrefab, RandomPosition(), Quaternion.identity);
+        var e = Instantiate(enemyType, RandomPosition(), Quaternion.identity);
         e.transform.SetParent(enemiesParent);
 
     }

@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     float moveHorizontal, moveVertical;
     Vector2 movement;
     int facingDirection = 1; //1 = right, -1 = left
+
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
         healthText.text = maxHealth.ToString();
     }
+
     private void Update()
     {
         if (dead)
