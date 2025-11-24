@@ -27,7 +27,6 @@ public class Enemy : MonoBehaviour
         target = GameObject.Find("Player").transform;
         anim = GetComponent<Animator>();
 
-
     }
     private void Update()
     {
@@ -53,6 +52,7 @@ public class Enemy : MonoBehaviour
             if(isCharger && !isCharging && Vector2.Distance(transform.position, target.position) < distanceToCharge)
             {
                 isPrepartingCharge = true;
+                //Call the method named StartCharging AFTER prepareTime seconds has passed.
                 Invoke("StartCharging", prepareTime);
             }
         }

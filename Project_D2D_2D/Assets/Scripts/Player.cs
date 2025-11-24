@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 
     Animator anim;
     Rigidbody2D rb;
-
     
     int maxHealth = 100;
     int currentHealth;
@@ -58,7 +57,7 @@ public class Player : MonoBehaviour
     //this detects when there is a collision
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        EnemyBase enemy = collision.gameObject.GetComponent<EnemyBase>();
         if(enemy != null)
         {
             Hit(20);
