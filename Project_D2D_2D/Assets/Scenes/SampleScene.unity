@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7147734468581498228, guid: bb36fb153e7934792a696ef22e93dba6, type: 3}
+  chargerPrefab: {fileID: 5263969588644151923, guid: dced9a8095f414ab8a5dbc70f6faec40, type: 3}
   timeBetweenSpawns: 0.5
 --- !u!1 &433640169
 GameObject:

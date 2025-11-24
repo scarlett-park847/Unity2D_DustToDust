@@ -2,8 +2,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    [Header("Stats")]
     [SerializeField] int maxHealth = 100;
     [SerializeField] float speed = 2f;
+
+    [Header("Charger")]
+    [SerializeField] bool isCharger;
+    [SerializeField] float distanceToCharge = 5f;
+    [SerializeField] float ChargeSpeed = 12f;
+    [SerializeField] float prepareTime = 2f;
+
+    bool isCharging = false;
+    bool isPrepartingCharge = false;
+
 
     private int currentHealth;
 
@@ -20,6 +31,10 @@ public class Enemy : MonoBehaviour
     }
     private void Update()
     {
+        if (!WaveManager.Instance.WaveRunning()) return;
+
+        if (isPrepartingCharge) return;
+
         if(target != null)
         {
             Vector3 direction = target.position - transform.position;
@@ -33,7 +48,20 @@ public class Enemy : MonoBehaviour
             //then we set x of local scale of the enemy either -1 or 1 depending on the player is on the left or right
             var playerToTheRight = target.position.x > transform.position.x;
             transform.localScale = new Vector2(playerToTheRight ? -1 : 1, 1);
+
+            //below means the enemy is close enough to the player to prepare charging
+            if(isCharger && !isCharging && Vector2.Distance(transform.position, target.position) < distanceToCharge)
+            {
+                isPrepartingCharge = true;
+                Invoke("StartCharging", prepareTime);
+            }
         }
+    }
+    void StartCharging()
+    {
+        isPrepartingCharge = false;
+        isCharging = true;
+        speed = ChargeSpeed;
     }
 
     public void Hit(int damage)
