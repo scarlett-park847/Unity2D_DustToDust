@@ -4,6 +4,8 @@ using UnityEngine;
 public class ChargeMovement : IEnemyMovement
 {
     private EnemyBase enemy;
+    public float MoveSpeed { get; private set; }
+
     private float distanceToCharge;
     private float chargeSpeed;
     private float prepareTime;
@@ -16,15 +18,19 @@ public class ChargeMovement : IEnemyMovement
 
     public ChargeMovement(
         EnemyBase enemy,
+        float moveSpeed,
         float distanceToCharge,
         float chargeSpeed,
         float prepareTime)
     {
         this.enemy = enemy;
+        MoveSpeed = moveSpeed;
         this.distanceToCharge = distanceToCharge;
         this.chargeSpeed = chargeSpeed;
         this.prepareTime = prepareTime;
     }
+
+    
 
     //public void Tick()
     //{
@@ -99,7 +105,7 @@ public class ChargeMovement : IEnemyMovement
     private void DoApproachMovement()
     {
         Vector3 dir = (enemy.Target.position - enemy.transform.position).normalized;
-        enemy.transform.position += dir * enemy.MoveSpeedValue * Time.deltaTime;
+        enemy.transform.position += dir * MoveSpeed * Time.deltaTime;
 
         FlipSprite(dir);
     }

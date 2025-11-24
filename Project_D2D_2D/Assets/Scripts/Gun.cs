@@ -24,7 +24,6 @@ public class Gun : MonoBehaviour
         anim = GetComponent<Animator>();
         timeSinceLastShot = fireRate;
         player = GameObject.Find("Player").transform;
-
     }
 
     private void Update()
@@ -40,9 +39,9 @@ public class Gun : MonoBehaviour
         closestEnemy = null;
         float closestDistance = Mathf.Infinity;
 
-        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        EnemyBase[] enemies = FindObjectsOfType<EnemyBase>();
 
-        foreach(Enemy enemy in enemies)
+        foreach(EnemyBase enemy in enemies)
         {
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
             if(distance < closestDistance && distance <= fireDistance)
