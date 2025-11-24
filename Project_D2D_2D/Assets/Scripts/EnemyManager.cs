@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    [SerializeField] GameObject enemyPrefab;
-    [SerializeField] GameObject chargerPrefab;
+    //[SerializeField] GameObject enemyPrefab;
+    //[SerializeField] GameObject chargerPrefab;
+    [SerializeField] GameObject[] enemyPrefabs;
 
     [SerializeField] float timeBetweenSpawns = 0.5f;
-    float currentTimeBetweenSpawns;
+    private float currentTimeBetweenSpawns;
 
-    Transform enemiesParent;
+    private Transform enemiesParent;
 
     public static EnemyManager Instance;
 
@@ -45,18 +46,29 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        var roll = Random.Range(0, 100);
-        var enemyType = roll < 90 ? enemyPrefab : chargerPrefab;
+        if (enemyPrefabs == null || enemyPrefabs.Length == 0)
+        {
+            Debug.LogWarning("EnemyManager has no enemyPrefabs assigned.");
+            return;
+        }
+
+        int index = Random.Range(0, enemyPrefabs.Length);
+        GameObject prefabToSpawn = enemyPrefabs[index];
 
 
         //below code create enemy in a random position and quaternion.identity makes it ignore rotaion 
-        var e = Instantiate(enemyType, RandomPosition(), Quaternion.identity);
-        e.transform.SetParent(enemiesParent);
+        var enemy = Instantiate(prefabToSpawn, RandomPosition(), Quaternion.identity);
+        if (enemiesParent != null)
+        {
+            enemy.transform.SetParent(enemiesParent);
+        }
 
     }
     public void DestoryAllEnemies()
     {
-        foreach(Transform e in enemiesParent)
+        if (enemiesParent == null) return;
+
+        foreach (Transform e in enemiesParent)
         {
             Destroy(e.gameObject);
         }
